@@ -173,27 +173,44 @@ MeterPrivate::drawScale( QPainter & painter, DrawParams & params )
 	if( scaleGridStep > 0.0 )
 	{
 		const int stepsCount = ( ( maxValue - minValue ) / scaleGridStep );
-		const qreal scaleStepInDegree = params.scaleDegree / stepsCount;
+		const qreal fullStepsCount = ( ( maxValue - minValue ) / scaleGridStep );
+		const qreal scaleStepInDegree = params.scaleDegree / ( maxValue - minValue ) * scaleGridStep;
 
 		for( int i = 0; i <= stepsCount; ++i )
 		{
 			painter.drawLine( 0, radius - params.margin, 0,
-			radius - params.gridLabelSize - params.margin );
+				radius - params.gridLabelSize - params.margin );
 			painter.rotate( scaleStepInDegree );
 			alreadyDrawn.append( params.startScaleAngle + i * scaleStepInDegree );
+		}
+
+		if( qAbs( fullStepsCount - stepsCount ) > 0.000001 )
+		{
+			painter.restore();
+
+			painter.save();
+
+			painter.translate( radius, radius );
+			painter.rotate( params.startScaleAngle + params.scaleDegree );
+			painter.setPen( textColor );
+
+			painter.drawLine( 0, radius - params.margin, 0,
+				radius - params.gridLabelSize - params.margin );
+
+			alreadyDrawn.append( params.startScaleAngle + params.scaleDegree );
 		}
 	}
 	else
 	{
 		painter.drawLine( 0, radius - params.margin, 0,
-		radius - params.gridLabelSize - params.margin );
+			radius - params.gridLabelSize - params.margin );
 
 		painter.rotate( params.scaleDegree );
 
 		alreadyDrawn.append( params.scaleDegree );
 
 		painter.drawLine( 0, radius - params.margin, 0,
-		radius - params.gridLabelSize - params.margin );
+			radius - params.gridLabelSize - params.margin );
 	}
 
 	painter.restore();
@@ -237,7 +254,9 @@ MeterPrivate::drawLabels( QPainter & painter, DrawParams & params )
 
 		qreal startRad = - qDegreesToRadians( (qreal) startScaleAngle  );
 		int stepsCount = ( ( maxValue - minValue ) / scaleGridStep );
-		qreal deltaRad = - qDegreesToRadians( params.scaleDegree / stepsCount );
+		const qreal fullStepsCount = ( ( maxValue - minValue ) / scaleGridStep );
+		qreal deltaRad = - qDegreesToRadians( params.scaleDegree /
+			( maxValue - minValue ) * scaleGridStep );
 		qreal sina, cosa;
 		qreal val = minValue;
 
@@ -263,6 +282,25 @@ MeterPrivate::drawLabels( QPainter & painter, DrawParams & params )
 			painter.drawText( x, y, str );
 
 			val += scaleGridStep;
+		}
+
+		if( qAbs( fullStepsCount - stepsCount ) > 0.000001 )
+		{
+			const qreal rad = - qDegreesToRadians( params.startScaleAngle + params.scaleDegree );
+
+			sina = qSin( rad );
+			cosa = qCos( rad );
+
+			const QString str = QString::number( maxValue, 'f', scalePrecision );
+
+			const QSizeF s = fm.size( Qt::TextSingleLine, str );
+
+			const qreal offset = ( radius - params.gridLabelSize - params.margin * 3 );
+
+			const int x = ( offset * sina ) - ( s.width() / 2 );
+			const int y = ( offset * cosa ) + ( s.height() / 4 );
+
+			painter.drawText( x, y, str );
 		}
 
 		painter.restore();
