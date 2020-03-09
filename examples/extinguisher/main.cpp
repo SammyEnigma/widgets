@@ -34,33 +34,56 @@
 // Qt include.
 #include <QApplication>
 
+
+// Qt include.
+#include <QApplication>
+#include <QVBoxLayout>
+#include <QSlider>
+
+
 int main( int argc, char ** argv )
 {
 	QApplication app( argc, argv );
 
-	Meter m;
-	m.setMinValue( 0.0 );
-	m.setMaxValue( 30.0 );
-	m.setValue( 15.0 );
-	m.setBackgroundColor( Qt::white );
-	m.setNeedleColor( Qt::black );
-	m.setTextColor( Qt::black );
-	m.setGridColor( Qt::black );
-	m.setUnitsLabel( QStringLiteral( "Kgf/cm^2" ) );
-	m.setRadius( 200 );
-	m.setStartScaleAngle( 115 );
-	m.setStopScaleAngle( 245 );
-	m.setScaleStep( 0.0 );
-	m.setScaleGridStep( 8.0 );
-	m.setDrawValue( false );
-	m.setDrawGridValues( true );
-	m.setDrawValuePrecision( 0 );
-	m.setScaleLabelPrecision( 0 );
-	m.setThresholdRange( 0, 8.0, 0, Qt::red );
-	m.setThresholdRange( 8.0, 16.0, 1, Qt::green );
-	m.setThresholdRange( 16.0, 30.1, 2, Qt::yellow );
+	QWidget w;
 
-	m.show();
+	auto * l = new QVBoxLayout( &w );
+
+	auto * m = new Meter( &w );
+
+	m->setMinValue( 0.0 );
+	m->setMaxValue( 30.0 );
+	m->setValue( 15.0 );
+	m->setBackgroundColor( Qt::white );
+	m->setNeedleColor( Qt::black );
+	m->setTextColor( Qt::black );
+	m->setGridColor( Qt::black );
+	m->setUnitsLabel( QStringLiteral( "Kgf/cm^2" ) );
+	m->setRadius( 200 );
+	m->setStartScaleAngle( 115 );
+	m->setStopScaleAngle( 245 );
+	m->setScaleStep( 0.0 );
+	m->setScaleGridStep( 8.0 );
+	m->setDrawValue( false );
+	m->setDrawGridValues( true );
+	m->setDrawValuePrecision( 0 );
+	m->setScaleLabelPrecision( 0 );
+	m->setThresholdRange( 0, 8.0, 0, Qt::red );
+	m->setThresholdRange( 8.0, 16.0, 1, Qt::green );
+	m->setThresholdRange( 16.0, 30.1, 2, Qt::yellow );
+
+	l->addWidget( m );
+
+	auto * s = new QSlider( Qt::Horizontal, &w );
+	s->setMinimum( 0 );
+	s->setMaximum( 30 );
+	s->setValue( 15 );
+
+	l->addWidget( s );
+
+	QObject::connect( s, &QSlider::valueChanged, m, &Meter::setValue );
+
+	w.show();
 
 	return QApplication::exec();
 }
