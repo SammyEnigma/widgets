@@ -35,3 +35,7 @@ m.setThresholdRange( 130.0, 220.1, 2, Qt::red );
 
 ![](doc/meter.png)
 ![](doc/extinguisher.png)
+
+# Donate
+
+[Donate with BTC](https://github.com/igormironchik)
