@@ -38,4 +38,4 @@ m.setThresholdRange( 130.0, 220.1, 2, Qt::red );
 
 # Donate
 
-[Donate with BTC](https://github.com/igormironchik)
+[![](bitcoin-btc-logo-full.png)](https://github.com/igormironchik)
