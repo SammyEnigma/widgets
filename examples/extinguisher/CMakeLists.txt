@@ -5,8 +5,8 @@ set( CMAKE_AUTOMOC ON )
 set( CMAKE_AUTORCC ON )
 set( CMAKE_AUTOUIC ON )
 
-find_package(Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package( Qt6 COMPONENTS Core REQUIRED )
+find_package( Qt6 COMPONENTS Widgets REQUIRED )
 
 set( SRC main.cpp )
 
@@ -17,4 +17,4 @@ link_directories( ${CMAKE_CURRENT_BINARY_DIR}/../../lib )
 
 add_executable( extinguisher ${SRC} )
 
-target_link_libraries( extinguisher widgets Qt5::Widgets )
+target_link_libraries( extinguisher widgets Qt6::Widgets )
