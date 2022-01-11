@@ -1,5 +1,5 @@
 
-project( meter )
+project( extinguisher )
 
 set( CMAKE_AUTOMOC ON )
 set( CMAKE_AUTORCC ON )
@@ -15,6 +15,6 @@ include_directories( ${CMAKE_CURRENT_SOURCE_DIR}
 
 link_directories( ${CMAKE_CURRENT_BINARY_DIR}/../../lib )
 
-add_executable( meter ${SRC} )
+add_executable( extinguisher ${SRC} )
 
-target_link_libraries( meter widgets Qt6::Widgets )
+target_link_libraries( extinguisher widgets Qt6::Widgets )

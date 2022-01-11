@@ -34,3 +34,4 @@ m.setThresholdRange( 130.0, 220.1, 2, Qt::red );
 ## Screenshot
 
 ![](doc/meter.png)
+![](doc/extinguisher.png)

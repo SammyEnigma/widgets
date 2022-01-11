@@ -33,6 +33,10 @@
 
 // Qt include.
 #include <QApplication>
+
+
+// Qt include.
+#include <QApplication>
 #include <QVBoxLayout>
 #include <QSlider>
 
@@ -48,33 +52,32 @@ int main( int argc, char ** argv )
 	auto * m = new Meter( &w );
 
 	m->setMinValue( 0.0 );
-	m->setMaxValue( 220.0 );
-	m->setValue( 90.0 );
-	m->setBackgroundColor( Qt::black );
-	m->setNeedleColor( Qt::blue );
-	m->setTextColor( Qt::white );
-	m->setGridColor( Qt::white );
-	m->setLabel( QStringLiteral( "speed" ) );
-	m->setUnitsLabel( QStringLiteral( "km/h" ) );
+	m->setMaxValue( 30.0 );
+	m->setValue( 15.0 );
+	m->setBackgroundColor( Qt::white );
+	m->setNeedleColor( Qt::black );
+	m->setTextColor( Qt::black );
+	m->setGridColor( Qt::black );
+	m->setUnitsLabel( QStringLiteral( "Kgf/cm^2" ) );
 	m->setRadius( 200 );
-	m->setStartScaleAngle( 35 );
-	m->setStopScaleAngle( 325 );
-	m->setScaleStep( 2.0 );
-	m->setScaleGridStep( 10.0 );
-	m->setDrawValue( true );
+	m->setStartScaleAngle( 115 );
+	m->setStopScaleAngle( 245 );
+	m->setScaleStep( 0.0 );
+	m->setScaleGridStep( 8.0 );
+	m->setDrawValue( false );
 	m->setDrawGridValues( true );
 	m->setDrawValuePrecision( 0 );
 	m->setScaleLabelPrecision( 0 );
-	m->setThresholdRange( 0, 110.0, 0 );
-	m->setThresholdRange( 110.0, 130.0, 1, Qt::yellow );
-	m->setThresholdRange( 130.0, 220.1, 2, Qt::red );
+	m->setThresholdRange( 0, 8.0, 0, Qt::red );
+	m->setThresholdRange( 8.0, 16.0, 1, Qt::green );
+	m->setThresholdRange( 16.0, 30.1, 2, Qt::yellow );
 
 	l->addWidget( m );
 
 	auto * s = new QSlider( Qt::Horizontal, &w );
 	s->setMinimum( 0 );
-	s->setMaximum( 220 );
-	s->setValue( 90 );
+	s->setMaximum( 30 );
+	s->setValue( 15 );
 
 	l->addWidget( s );
 
