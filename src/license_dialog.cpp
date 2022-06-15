@@ -93,9 +93,9 @@ protected:
 
 		QPainterPath pt;
 		pt.moveTo( 1, 1 );
-		pt.lineTo( width() - height(), 1 );
-		pt.lineTo( width() - 1, height() / 2 );
-		pt.lineTo( width() - height(), height() - 1 );
+		pt.lineTo( width() - 1, 1 );
+		pt.lineTo( width() - height() / 2, height() / 2 );
+		pt.lineTo( width() - 1, height() - 1 );
 		pt.lineTo( 1, height() - 1 );
 		pt.lineTo( 1, 1 );
 
