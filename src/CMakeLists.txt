@@ -1,11 +1,18 @@
 
 project( widgets )
 
+set( CMAKE_AUTOMOC ON )
+set( CMAKE_AUTORCC ON )
+set( CMAKE_AUTOUIC ON )
+
 find_package( Qt6Core REQUIRED )
 find_package( Qt6Widgets REQUIRED )
 
 set( SRC meter.hpp
-	meter.cpp )
+	meter.cpp
+	license_dialog.hpp
+	license_dialog.cpp
+	license_dialog.ui )
     
 include_directories( ${CMAKE_CURRENT_SOURCE_DIR} )
 

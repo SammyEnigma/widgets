@@ -74,8 +74,8 @@ signals:
 	void thresholdFired( int thresholdIndex );
 
 public:
-	Meter( QWidget * parent = Q_NULLPTR );
-	virtual ~Meter();
+	explicit Meter( QWidget * parent = Q_NULLPTR );
+	~Meter() override;
 
 	qreal minValue() const;
 	void setMinValue( qreal v );
