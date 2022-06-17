@@ -51,7 +51,8 @@ class Anchor
 	:	public QWidget
 {
 public:
-	Anchor( QWidget * parent, const QString & name, QLabel * label, QScrollArea * scroll )
+	Anchor( QWidget * parent, const QString & name,
+		QLabel * label, QScrollArea * scroll )
 		:	QWidget( parent )
 		,	m_label( label )
 		,	m_scroll( scroll )
@@ -77,7 +78,7 @@ protected:
 		{
 			m_pressed = false;
 
-			m_scroll->ensureVisible( m_label->x(), m_label->y() );
+			m_scroll->verticalScrollBar()->setSliderPosition( m_label->y() );
 		}
 
 		e->accept();
