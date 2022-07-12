@@ -10,10 +10,6 @@ set( CMAKE_AUTOMOC ON )
 
 option( BUILD_EXAMPLES "Build examples" ON )
 
-if( ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" )
-  set( CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-fPIC" )
-endif()
-
 find_package( Qt6Core REQUIRED )
 find_package( Qt6Gui REQUIRED )
 find_package( Qt6Widgets REQUIRED )
