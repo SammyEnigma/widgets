@@ -4,7 +4,7 @@
 
 	\author Igor Mironchik (igor.mironchik at gmail dot com).
 
-	Copyright (c) 2022 Igor Mironchik
+	Copyright (c) 2020 Igor Mironchik
 
 	Permission is hereby granted, free of charge, to any person
 	obtaining a copy of this software and associated documentation
@@ -28,35 +28,21 @@
 	OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+// Widgets include.
+#include <Widgets/InfoDialog>
 
 // Qt include.
-#include <QDialog>
-#include <QWidget>
-#include <QVBoxLayout>
+#include <QApplication>
 
 
-//
-// LicenseDialog
-//
-
-class LicenseDialogPrivate;
-
-//! Dialog with list of licenses.
-class LicenseDialog
-	:	public QDialog
+int main( int argc, char ** argv )
 {
-	Q_OBJECT
+	QApplication app( argc, argv );
 
-public:
-	explicit LicenseDialog( QWidget * parent = nullptr );
-	~LicenseDialog() override;
+	InfoDialog msg( "Message Message Message Message Message Message",
+		"Details:\n\tdetails\n\tdetails" );
 
-	//! Add license.
-	void addLicense( const QString & title, const QString & license );
+	msg.exec();
 
-private:
-	QScopedPointer< LicenseDialogPrivate > d;
-
-	Q_DISABLE_COPY( LicenseDialog )
-}; // class LicenseDialog
+	return 0;
+}

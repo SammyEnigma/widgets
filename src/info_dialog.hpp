@@ -33,30 +33,27 @@
 // Qt include.
 #include <QDialog>
 #include <QWidget>
-#include <QVBoxLayout>
 
 
 //
-// LicenseDialog
+// InfoDialog
 //
 
-class LicenseDialogPrivate;
+class InfoDialogPrivate;
 
-//! Dialog with list of licenses.
-class LicenseDialog
+//! Information dialog.
+class InfoDialog
 	:	public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit LicenseDialog( QWidget * parent = nullptr );
-	~LicenseDialog() override;
-
-	//! Add license.
-	void addLicense( const QString & title, const QString & license );
+	InfoDialog( const QString & msg, const QString & details,
+		QWidget * parent = nullptr );
+	~InfoDialog() override;
 
 private:
-	QScopedPointer< LicenseDialogPrivate > d;
+	QScopedPointer< InfoDialogPrivate > d;
 
-	Q_DISABLE_COPY( LicenseDialog )
-}; // class LicenseDialog
+	Q_DISABLE_COPY( InfoDialog )
+}; // class InfoDialog
