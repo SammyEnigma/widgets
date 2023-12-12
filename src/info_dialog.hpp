@@ -48,7 +48,7 @@ class InfoDialog
 	Q_OBJECT
 
 public:
-	InfoDialog( const QString & msg, const QString & details,
+	InfoDialog( const QString & title, const QString & msg, const QString & details,
 		QWidget * parent = nullptr );
 	~InfoDialog() override;
 

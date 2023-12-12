@@ -39,7 +39,7 @@ int main( int argc, char ** argv )
 {
 	QApplication app( argc, argv );
 
-	InfoDialog msg( "Message Message Message Message Message Message",
+	InfoDialog msg( "Tile", "Message Message Message Message Message Message",
 		"Details:\n\tdetails\n\tdetails" );
 
 	msg.exec();

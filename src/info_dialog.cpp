@@ -49,10 +49,12 @@ public:
 	{
 	}
 
-	void init( InfoDialog * parent, const QString & msg, const QString & details )
+	void init( InfoDialog * parent, const QString & title,
+		const QString & msg, const QString & details )
 	{
 		q = parent;
 		ui.setupUi( q );
+		q->setWindowTitle( title );
 		const auto i = q->style()->standardIcon( QStyle::SP_MessageBoxInformation, nullptr, q );
 		const int iconSize = q->style()->pixelMetric( QStyle::PM_MessageBoxIconSize, nullptr, q );
 		const qreal dpr = q->devicePixelRatio();
@@ -100,11 +102,12 @@ public:
 // InfoDialog
 //
 
-InfoDialog::InfoDialog( const QString & msg, const QString & details, QWidget * parent )
+InfoDialog::InfoDialog( const QString & title, const QString & msg,
+	const QString & details, QWidget * parent )
 	:	QDialog( parent )
 	,	d( new InfoDialogPrivate )
 {
-	d->init( this, msg, details );
+	d->init( this, title, msg, details );
 }
 
 InfoDialog::~InfoDialog()
