@@ -41,7 +41,10 @@
 #include <QPainterPath>
 #include <QPalette>
 #include <QScrollBar>
+#include <QShowEvent>
 
+
+namespace /* anonymous */ {
 
 //
 // Anchor
@@ -57,10 +60,26 @@ public:
 		,	m_label( label )
 		,	m_scroll( scroll )
 		,	m_pressed( false )
+		,	m_highlighted( false )
 	{
 		setToolTip( name );
 		setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Fixed );
 		setMinimumSize( 20, 10 );
+	}
+
+	QRect labelRect() const
+	{
+		auto r = m_label->rect();
+		r.moveTo( m_label->pos() );
+
+		return r;
+	}
+
+	void highlight( bool on )
+	{
+		m_highlighted = on;
+
+		update();
 	}
 
 protected:
@@ -89,7 +108,8 @@ protected:
 		QPainter p( this );
 		p.setRenderHint( QPainter::Antialiasing );
 
-		p.setPen( QPen( palette().color( QPalette::Highlight ), 2.0 ) );
+		p.setPen( QPen( m_highlighted ? palette().color( QPalette::LinkVisited ) :
+			palette().color( QPalette::Highlight ), 2.0 ) );
 		p.setBrush( palette().color( QPalette::Button ) );
 
 		QPainterPath pt;
@@ -107,7 +127,10 @@ private:
 	QLabel * m_label;
 	QScrollArea * m_scroll;
 	bool m_pressed;
+	bool m_highlighted;
 }; // class Anchor
+
+} /* namespace anonymous */
 
 
 //
@@ -122,6 +145,19 @@ public:
 		,	m_aw( nullptr )
 		,	m_al( nullptr )
 	{
+	}
+
+	void highlightAnchor( int value )
+	{
+		const auto vh = this->m_ui.m_scrollArea->viewport()->height();
+		const auto vr = QRect( 0, value, this->m_ui.m_scrollArea->viewport()->width(), vh );
+
+		for( const auto & a : std::as_const( this->m_anchors ) )
+		{
+			const auto ir = vr.intersected( a->labelRect() );
+
+			a->highlight( ir.height() > vh / 2 && !ir.isNull() );
+		}
 	}
 
 	void init( LicenseDialog * q )
@@ -140,6 +176,9 @@ public:
 		m_ui.m_anchors->setWidget( m_aw );
 		m_ui.m_anchors->setMinimumWidth( 20 + 4 +
 			m_ui.m_anchors->verticalScrollBar()->sizeHint().width() );
+
+		QObject::connect( m_ui.m_scrollArea->verticalScrollBar(), &QScrollBar::valueChanged,
+			[this] ( auto value ) { this->highlightAnchor( value ); } );
 	}
 
 	//! Ui.
@@ -152,6 +191,8 @@ public:
 	QWidget * m_aw;
 	//! Anchors layout.
 	QVBoxLayout * m_al;
+	//! Anchros.
+	QVector< Anchor* > m_anchors;
 }; // class LicenseDialogPrivate
 
 
@@ -194,4 +235,15 @@ LicenseDialog::addLicense( const QString & title, const QString & license )
 
 	Anchor * a = new Anchor( d->m_aw, title, label, d->m_ui.m_scrollArea );
 	d->m_al->insertWidget( d->m_al->count() - 1, a );
+	d->m_anchors.push_back( a );
+
+	d->highlightAnchor( d->m_ui.m_scrollArea->verticalScrollBar()->value() );
+}
+
+void
+LicenseDialog::showEvent( QShowEvent * e )
+{
+	d->highlightAnchor( d->m_ui.m_scrollArea->verticalScrollBar()->value() );
+
+	e->accept();
 }
