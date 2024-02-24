@@ -156,7 +156,7 @@ public:
 		{
 			const auto ir = vr.intersected( a->labelRect() );
 
-			a->highlight( ir.height() > vh / 2 && !ir.isNull() );
+			a->highlight( ir.height() >= qRound( (double) vh / 2.5 ) && !ir.isNull() );
 		}
 	}
 
