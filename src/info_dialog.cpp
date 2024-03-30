@@ -61,23 +61,20 @@ public:
 		ui.pixmap->setPixmap( i.pixmap( QSize( iconSize, iconSize ), dpr ) );
 		ui.msg->setText( msg );
 		ui.details->setPlainText( details );
-		ui.line->hide();
 		ui.details->hide();
 		showHide = ui.buttonBox->addButton( InfoDialog::tr( "Show Details..." ),
 			QDialogButtonBox::ActionRole );
 		InfoDialog::connect( showHide, &QPushButton::clicked,
 			[this]()
 			{
-				if( this->ui.line->isVisible() )
+				if( this->ui.details->isVisible() )
 				{
 					this->showHide->setText( InfoDialog::tr( "Show Details..." ) );
-					this->ui.line->hide();
 					this->ui.details->hide();
 				}
 				else
 				{
 					this->showHide->setText( InfoDialog::tr( "Hide Details..." ) );
-					this->ui.line->show();
 					this->ui.details->show();
 				}
 
